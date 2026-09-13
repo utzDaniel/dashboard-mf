@@ -1,0 +1,14 @@
+services:
+  dashboard-mf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dashboard-mf
+    ports:
+      - "4209:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

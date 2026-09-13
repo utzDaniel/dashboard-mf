@@ -1,0 +1,27 @@
+<div class="page-wrap">
+  <!-- Cabeçalho -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon" style="background-color: var(--p-primary-100, #e0e7ff)">
+        <i class="pi pi-chart-bar" style="font-size: 1.25rem; color: var(--p-primary-500, #6366f1)"></i>
+      </div>
+      <h1 class="page-title">Dashboard</h1>
+    </div>
+    <app-search-card (selectedCompetenceInitialChange)="onCompetenceInitialSelect($event)" 
+    (selectedCompetenceEndChange)="onCompetenceEndSelect($event)"
+    (search)="onSearch()" />
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <span>Início</span>
+    <span style="margin: 0 .25rem">›</span>
+    <span>Dashboard</span>
+  </div>
+
+  <app-summary-card [competenceInitial]="searchCompetenceInitial" [competenceEnd]="searchCompetenceEnd"/>
+
+</div>
+<p-toast key="error" id="toast-error"></p-toast>
+<p-toast key="success" id="toast-success"></p-toast>
+<p-toast key="warning" id="toast-warning"></p-toast>

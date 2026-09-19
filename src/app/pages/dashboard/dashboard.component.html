@@ -19,7 +19,34 @@
     <span>Dashboard</span>
   </div>
 
-  <app-summary-card [competenceInitial]="searchCompetenceInitial" [competenceEnd]="searchCompetenceEnd"/>
+    <p-tabs value="0" class="dashboard-tabs">
+    <p-tablist>
+
+      <p-tab value="0">
+        <i class="pi pi-credit-card"></i>
+        Despesa
+      </p-tab>
+
+      <p-tab value="1">
+        <i class="pi pi-wallet"></i>
+        Salário
+      </p-tab>
+
+    </p-tablist>
+
+    <p-tabpanels>
+
+      <p-tabpanel value="0">
+        <app-summary-expense-card [competenceInitial]="searchCompetenceInitial" [competenceEnd]="searchCompetenceEnd"/>
+      </p-tabpanel>
+
+      <p-tabpanel value="1">
+       <app-summary-payroll-card [competenceInitial]="searchCompetenceInitial" [competenceEnd]="searchCompetenceEnd"/>
+      </p-tabpanel>
+
+    </p-tabpanels>
+  </p-tabs>
+
 
 </div>
 <p-toast key="error" id="toast-error"></p-toast>

@@ -16,3 +16,21 @@ export interface PayrollEventResponse {
   name: string;
   total: number;
 }
+
+export interface Expense {
+  name: string;
+  total: number;
+}
+
+export interface ExpenseCategory {
+  id: number;
+  name: string;
+  total: number;
+  expenses: Expense[];
+}
+
+export interface ExpenseSummaryResponse {
+  competenceInitial: string;
+  competenceEnd: string;
+  categories: ExpenseCategory[];
+}

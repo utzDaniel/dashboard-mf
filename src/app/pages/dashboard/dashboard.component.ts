@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 
 import { SearchCardComponent } from './components/search-card/search-card.component';
-import { SummaryCardComponent } from './components/summary-card/summary-card.component';
+import { SummaryPayrollCardComponent } from './components/summary-payroll-card/summary-payroll-card.component';
 import {
   TabsModule
 } from 'primeng/tabs';
+import { SummaryExpenseCardComponent } from './components/summary-expense-card/summary-expense-card.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,8 @@ import {
     ToastModule,
     TabsModule,
     SearchCardComponent,
-    SummaryCardComponent
+    SummaryPayrollCardComponent,
+    SummaryExpenseCardComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'

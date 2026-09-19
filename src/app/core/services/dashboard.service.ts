@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   PayrollSummaryResponse,
+  ExpenseSummaryResponse
 } from '../models/dashboard.model';
 
 
@@ -20,6 +21,13 @@ export class DashboardService {
       competenceEnd: string,
   ): Observable<PayrollSummaryResponse> {
     return this.http.get<PayrollSummaryResponse>(`${this.baseUrl}/payroll/${competenceInitial}/${competenceEnd}/summary`);
+  }
+
+  getExpenseSummary(
+      competenceInitial: string,
+      competenceEnd: string,
+  ): Observable<ExpenseSummaryResponse> {
+    return this.http.get<ExpenseSummaryResponse>(`${this.baseUrl}/expense/${competenceInitial}/${competenceEnd}/summary`);
   }
 
 }

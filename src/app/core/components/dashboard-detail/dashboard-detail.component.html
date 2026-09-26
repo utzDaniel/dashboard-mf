@@ -1,0 +1,93 @@
+<div class="details-grid">
+
+  @for (group of events; track group.id) {
+
+    <div class="detail-card">
+
+      <!-- HEADER -->
+
+      <div class="detail-header">
+
+        <div class="detail-title-wrapper">
+
+          <div
+            class="detail-icon"
+            [style.background]="group.background"
+            [style.color]="group.color"
+          >
+
+            <i [class]="group.icon"></i>
+
+          </div>
+
+          <div>
+
+            <div class="detail-title">
+              {{ group.name }}
+            </div>
+
+            <div class="detail-subtitle">
+
+              {{ group.count }}
+
+              {{
+                group.count === 1
+                  ? 'evento'
+                  : 'eventos'
+              }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="detail-total">
+          {{ formatCurrency(group.value) }}
+        </div>
+
+      </div>
+
+
+      <!-- EVENTOS -->
+
+      <div class="detail-list">
+
+        @for (
+          event of group.events;
+          track event.name
+        ) {
+
+          <div class="detail-row">
+
+            <span class="detail-name">
+              {{ event.name }}
+            </span>
+
+            <span class="detail-value">
+              {{ formatCurrency(event.value) }}
+            </span>
+
+          </div>
+
+        } @empty {
+
+          <div class="empty-state">
+            Nenhum evento encontrado.
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  } @empty {
+
+    <div class="empty-state">
+      Nenhum registro encontrado.
+    </div>
+
+  }
+
+</div>

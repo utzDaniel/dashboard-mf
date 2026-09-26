@@ -1,0 +1,145 @@
+.column-chart {
+  width: 100%;
+  height: 280px;
+}
+
+
+.columns {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-around;
+
+  gap: 18px;
+}
+
+
+.column-item {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+/*
+ * Mesmo estilo do valor usado no bar-chart.
+ */
+.column-value {
+  color: #17233b;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/*
+ * Área onde ficam a porcentagem e a barra.
+ *
+ * Os 20px superiores ficam reservados
+ * para a porcentagem.
+ */
+.column-area {
+  position: relative;
+
+  width: 100%;
+  height: 210px;
+
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: center;
+
+  padding-top: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/*
+ * Barra principal.
+ */
+.column-bar {
+  width: min(48px, 70%);
+
+  min-height: 3px;
+
+  border-radius: 7px 7px 3px 3px;
+
+  transition:
+    height 0.35s ease;
+}
+
+
+/*
+ * Mesmo estilo visual da porcentagem
+ * usada no bar-chart.
+ */
+.column-percentage {
+  position: absolute;
+
+  top: 0;
+
+  color: #98a2b3;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 20px;
+
+  white-space: nowrap;
+}
+
+
+/*
+ * Nome da categoria.
+ */
+.column-label {
+  max-width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #667085;
+
+  font-size: 11px;
+
+  text-align: center;
+}
+
+
+.column-label span:last-child {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.dot {
+  width: 7px;
+  height: 7px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}

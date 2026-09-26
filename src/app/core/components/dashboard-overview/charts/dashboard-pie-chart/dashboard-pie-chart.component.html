@@ -1,0 +1,54 @@
+<div class="pie-chart">
+
+  <div class="pie-content">
+
+    <div class="pie" [style.background]="pieGradient">
+
+      <div class="pie-center">
+
+        <strong>
+          {{ formatValue(total) }}
+        </strong>
+
+        <span>
+          Total
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="legend">
+
+      @for (
+      item of items;
+      track item.id
+      ) {
+
+      <div class="legend-item">
+
+        <span class="legend-dot" [style.background]="item.color">
+        </span>
+
+        <span class="legend-name">
+          {{ item.name }}
+        </span>
+
+        <strong class="legend-percentage">
+          {{ formatPercentage(getPercentage(item)) }}%
+        </strong>
+
+        <span class="legend-value">
+          {{ formatValue(item.value) }}
+        </span>
+
+      </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

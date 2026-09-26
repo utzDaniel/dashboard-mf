@@ -1,0 +1,76 @@
+<div class="dashboard-overview">
+
+  <div class="dashboard-header">
+
+    <div class="header-content">
+
+      <h3>
+        {{ title }}
+      </h3>
+
+      <span>
+        {{ description }}
+      </span>
+
+    </div>
+
+
+    <div class="chart-selector">
+
+      <select [value]="chartType" (change)="onChartTypeChange($event)">
+
+        @for (
+        type of chartTypes;
+        track type.value
+        ) {
+
+        <option [value]="type.value">
+          {{ type.label }}
+        </option>
+
+        }
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <div class="chart-container">
+
+    @switch (chartType) {
+
+    @case ('bar') {
+
+    <app-dashboard-bar-chart [items]="items">
+    </app-dashboard-bar-chart>
+
+    }
+
+    @case ('column') {
+
+    <app-dashboard-column-chart [items]="items">
+    </app-dashboard-column-chart>
+
+    }
+
+    @case ('pie') {
+
+    <app-dashboard-pie-chart [items]="items">
+    </app-dashboard-pie-chart>
+
+    }
+
+    @case ('line') {
+
+    <app-dashboard-line-chart [items]="items">
+    </app-dashboard-line-chart>
+
+    }
+
+    }
+
+  </div>
+
+</div>

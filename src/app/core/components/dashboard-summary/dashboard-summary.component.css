@@ -1,0 +1,241 @@
+.dashboard-summary {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.summary-header h2 {
+  margin: 0;
+
+  color: #14213d;
+
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.summary-header span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #8b98ab;
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   GRID
+   ============================================================ */
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* ============================================================
+   CARD
+   ============================================================ */
+
+.summary-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  min-height: 92px;
+
+  padding: 16px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e6ee;
+
+  border-radius: 12px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 18px rgba(20, 33, 61, 0.07);
+}
+
+
+/* ============================================================
+   BORDA LATERAL
+   ============================================================ */
+
+.summary-card::before {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: #cbd5e1;
+}
+
+.summary-card.total::before {
+  background: #2563eb;
+}
+
+.summary-card.average::before {
+  background: #7c3aed;
+}
+
+.summary-card.records::before {
+  background: #16a34a;
+}
+
+.summary-card.item::before {
+  background: var(--item-color);
+}
+
+
+/* ============================================================
+   ICON
+   ============================================================ */
+
+.card-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+}
+
+.summary-card.total .card-icon {
+  background: #e5efff;
+  color: #2563eb;
+}
+
+.summary-card.average .card-icon {
+  background: #f0e7ff;
+  color: #7c3aed;
+}
+
+.summary-card.records .card-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+
+.card-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content .label {
+  margin-bottom: 3px;
+
+  color: #68768d;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.card-content strong {
+  color: #14213d;
+
+  font-size: 17px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.card-content small {
+  margin-top: 4px;
+
+  color: #9aa5b5;
+
+  font-size: 10px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1200px) {
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    min-height: 88px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .summary-card {
+    padding: 14px;
+  }
+
+  .summary-card .card-icon {
+    width: 38px;
+    height: 38px;
+
+    font-size: 15px;
+  }
+
+  .card-content strong {
+    font-size: 16px;
+  }
+
+}

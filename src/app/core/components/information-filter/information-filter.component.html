@@ -1,0 +1,124 @@
+<div class="information-filter">
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="filter-header">
+
+    <div>
+
+      <h3>
+        {{ title }}
+      </h3>
+
+      <span>
+        {{ description }}
+      </span>
+
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- ACTIONS -->
+    <!-- =================================================== -->
+
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="filter-action"
+        [class.active]="allSelected"
+        (click)="selectAll()"
+      >
+
+        <i class="pi pi-check-square"></i>
+
+        Todos
+
+      </button>
+
+
+      <button
+        type="button"
+        class="filter-action"
+        [class.active]="!hasSelection"
+        (click)="clear()"
+      >
+
+        <i class="pi pi-times"></i>
+
+        Limpar
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- OPTIONS -->
+  <!-- ===================================================== -->
+
+  <div class="filter-options">
+
+    @for (item of items; track item.id) {
+
+      <label
+        class="filter-option"
+        [class.selected]="isSelected(item.id)"
+        [style.--item-color]="item.color"
+        [style.--item-background]="
+          item.background || item.color
+        "
+      >
+
+        <!-- CHECKBOX REAL -->
+        <input
+          type="checkbox"
+          [checked]="isSelected(item.id)"
+          (change)="toggle(item.id)"
+        />
+
+
+        <!-- CHECKBOX VISUAL -->
+        <span class="custom-checkbox">
+
+          @if (isSelected(item.id)) {
+
+            <i class="pi pi-check"></i>
+
+          }
+
+        </span>
+
+
+        <!-- ÍCONE -->
+        <span class="filter-icon">
+
+          <i [class]="item.icon"></i>
+
+        </span>
+
+
+        <!-- CONTEÚDO -->
+        <span class="filter-content">
+
+          <strong>
+            {{ item.name }}
+          </strong>
+
+          <small>
+            {{ formatCurrency(item.value) }}
+          </small>
+
+        </span>
+
+      </label>
+
+    }
+
+  </div>
+
+</div>

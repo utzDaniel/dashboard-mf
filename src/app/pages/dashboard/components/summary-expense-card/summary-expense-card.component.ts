@@ -1,23 +1,39 @@
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  signal
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { DashboardService } from '../../../../core/services/dashboard.service';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { TagModule } from 'primeng/tag';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { ExpenseSummaryResponse } from '../../../../core/models/dashboard.model';
+
+import { InformationFilterComponent } from '../../../../core/components/information-filter/information-filter.component';
+import { DashboardItemGroup, DashboardItem, DashboardEvent } from '../../../../core/models/core.model';
+import { DashboardOverviewComponent } from '../../../../core/components/dashboard-overview/dashboard-overview.component';
+import { DashboardSummaryComponent } from '../../../../core/components/dashboard-summary/dashboard-summary.component';
+import { DashboardMainComponent } from '../../../../core/components/dashboard-main/dashboard-main.component';
+import { DashboardDetailComponent } from '../../../../core/components/dashboard-detail/dashboard-detail.component';
 
 @Component({
   selector: 'app-summary-expense-card',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule,
-    InputTextModule, TagModule, InputNumberModule
+  imports: [
+    CommonModule,
+    InformationFilterComponent,
+    DashboardOverviewComponent,
+    DashboardSummaryComponent,
+    DashboardMainComponent,
+    DashboardDetailComponent
   ],
   templateUrl: './summary-expense-card.component.html',
   styleUrl: './summary-expense-card.component.css'
 })
-export class SummaryExpenseCardComponent implements OnInit, OnChanges {
+export class SummaryExpenseCardComponent
+  implements OnInit, OnChanges {
 
   private readonly dashboardService = inject(DashboardService);
 
@@ -29,160 +45,213 @@ export class SummaryExpenseCardComponent implements OnInit, OnChanges {
   readonly EXPENSE_CATEGORY = {
     CUSTO_FIXO: 1,
     CONFORTO: 2,
-    METAS: 3,
-    PRAZERES: 4,
-    INVESTIMENTO: 5,
-    CONHECIMENTO: 6,
-    EMERGENCIA: 7
+    PRAZERES: 3,
+    CONHECIMENTO: 4,
+    EMERGENCIA: 5
   };
+
+  selectedCategories = signal<number[]>([]);
+
 
   ngOnInit(): void {
     this.onSearch();
   }
 
-  formatCurrency(value: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(value ?? 0);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["competenceInitial"]?.firstChange === false || changes["competenceEnd"]?.firstChange === false) {
+
+    if (
+      changes['competenceInitial']?.firstChange === false ||
+      changes['competenceEnd']?.firstChange === false
+    ) {
       this.onSearch();
     }
   }
 
   onSearch(): void {
-    this.dashboardService.getExpenseSummary(this.competenceInitial!, this.competenceEnd!)
+
+    if (!this.competenceInitial || !this.competenceEnd) {
+      return;
+    }
+
+    this.dashboardService
+      .getExpenseSummary(
+        this.competenceInitial,
+        this.competenceEnd
+      )
       .subscribe({
         next: (response) => {
           this.expenseSummary.set(response);
+          const categoryIds = response.categories.map(
+            category => category.id
+          );
+
+          this.selectedCategories.set(categoryIds);
         }
       });
   }
 
-getCategory(expenseId: number) {
-    return this.expenseSummary()?.categories.find(
-      expense => expense.id === expenseId
-    );
+  getCategoryValue(categoryId: number): number {
+
+    const category =
+      this.expenseSummary()?.categories
+        .find(category => category.id === categoryId);
+
+    return !category ? 0 : category.total;
+  }
+
+  getCategoryCount(categoryId: number): number {
+
+    const category =
+      this.expenseSummary()?.categories
+        .find(category => category.id === categoryId);
+
+    return !category ? 0 : category.expenses.length;
+  }
+
+  getEvents(categoryId: number): DashboardItem[] {
+
+    const category =
+      this.expenseSummary()?.categories
+        .find(category => category.id === categoryId)
+
+    return !category ? [] : category.expenses.map(expense => ({
+      name: expense.name,
+      value: expense.total
+    })).sort((a, b) => b.value - a.value);
+  }
+
+  get categoryOptions(): DashboardItemGroup[] {
+
+    return [
+      {
+        id: this.EXPENSE_CATEGORY.CUSTO_FIXO,
+        name: 'Custo Fixo',
+        value: this.getCategoryValue(
+          this.EXPENSE_CATEGORY.CUSTO_FIXO
+        ),
+        count: this.getCategoryCount(
+          this.EXPENSE_CATEGORY.CUSTO_FIXO
+        ),
+        events: this.getEvents(
+          this.EXPENSE_CATEGORY.CUSTO_FIXO
+        ),
+        icon: 'pi pi-home',
+        color: '#2563eb',
+        background: '#eff6ff'
+      },
+      {
+        id: this.EXPENSE_CATEGORY.CONFORTO,
+        name: 'Conforto',
+        value: this.getCategoryValue(
+          this.EXPENSE_CATEGORY.CONFORTO
+        ),
+        count: this.getCategoryCount(
+          this.EXPENSE_CATEGORY.CONFORTO
+        ),
+        events: this.getEvents(
+          this.EXPENSE_CATEGORY.CONFORTO
+        ),
+        icon: 'pi pi-heart',
+        color: '#8b5cf6',
+        background: '#f5f3ff'
+      },
+      {
+        id: this.EXPENSE_CATEGORY.PRAZERES,
+        name: 'Prazeres',
+        value: this.getCategoryValue(
+          this.EXPENSE_CATEGORY.PRAZERES
+        ),
+        count: this.getCategoryCount(
+          this.EXPENSE_CATEGORY.PRAZERES
+        ),
+        events: this.getEvents(
+          this.EXPENSE_CATEGORY.PRAZERES
+        ),
+        icon: 'pi pi-star',
+        color: '#f59e0b',
+        background: '#fef2f2'
+      },
+      {
+        id: this.EXPENSE_CATEGORY.CONHECIMENTO,
+        name: 'Conhecimento',
+        value: this.getCategoryValue(
+          this.EXPENSE_CATEGORY.CONHECIMENTO
+        ),
+        count: this.getCategoryCount(
+          this.EXPENSE_CATEGORY.CONHECIMENTO
+        ),
+        events: this.getEvents(
+          this.EXPENSE_CATEGORY.CONHECIMENTO
+        ),
+        icon: 'pi pi-book',
+        color: '#06b6d4',
+        background: '#ecfeff'
+      },
+      {
+        id: this.EXPENSE_CATEGORY.EMERGENCIA,
+        name: 'Emergência',
+        value: this.getCategoryValue(
+          this.EXPENSE_CATEGORY.EMERGENCIA
+        ),
+        count: this.getCategoryCount(
+          this.EXPENSE_CATEGORY.EMERGENCIA
+        ),
+        events: this.getEvents(
+          this.EXPENSE_CATEGORY.EMERGENCIA
+        ),
+        icon: 'pi pi-exclamation-triangle',
+        color: '#ef4444',
+        background: '#fdf2f8'
+      }
+    ];
   }
 
   get categories() {
-    return this.expenseSummary()?.categories ?? [];
-  }
- get totalExpenses(): number {
 
-    return this.categories.reduce(
-      (total, category) => total + category.total,
-      0
+    const categories =
+      this.expenseSummary()?.categories ?? [];
+
+    return categories.filter(category =>
+      this.selectedCategories().includes(category.id)
     );
   }
-   get totalCategories(): number {
-    return this.categories.length;
-  }
-  get totalExpenseItems(): number {
 
-    return this.categories.reduce(
-      (total, category) => total + category.expenses.length,
-      0
+  get filteredCategoryOptions(): DashboardItemGroup[] {
+    return this.categoryOptions.filter(item =>
+      this.selectedCategories().includes(item.id)
     );
   }
-  get biggestCategory() {
 
-    if (!this.categories.length) {
-      return null;
-    }
+  get filteredCategoryEvent(): DashboardEvent[] {
 
-    return [...this.categories]
-      .sort((a, b) => b.total - a.total)[0];
-  }
-  getCategoryPercentage(category: { total: number }): number {
+    const categories =
+      this.expenseSummary()?.categories ?? [];
 
-    if (!this.totalExpenses) {
-      return 0;
-    }
+    const selectedIds = this.selectedCategories();
 
-    return (category.total / this.totalExpenses) * 100;
-  }
-  get allExpenses() {
-
-    return this.categories.flatMap(category =>
-      category.expenses.map(expense => ({
-        ...expense,
-        category: category.name
-      }))
-    );
-  }
-  get topExpenses() {
-
-    return [...this.allExpenses]
-      .sort((a, b) => b.total - a.total)
-      .slice(0, 5);
-  }
-  getExpensePercentage(expense: { total: number }): number {
-
-    if (!this.totalExpenses) {
-      return 0;
-    }
-
-    return (expense.total / this.totalExpenses) * 100;
-  }
-   getCategoryColor(index: number): string {
-
-    const colors = [
-      '#2563eb', // azul
-      '#8b5cf6', // roxo
-      '#f59e0b', // amarelo
-      '#ef4444', // vermelho
-      '#10b981', // verde
-      '#06b6d4', // cyan
-      '#ec4899'  // rosa
-    ];
-
-    return colors[index % colors.length];
-  }
-
-    formatDate(date: string | null): string {
-
-    if (!date) {
-      return '';
-    }
-
-    const parsedDate = this.parseDate(date);
-
-    return new Intl.DateTimeFormat('pt-BR', {
-      month: '2-digit',
-      year: 'numeric'
-    }).format(parsedDate);
-  }
-
-  private parseDate(date: string): Date {
-
-    const [year, month, day] = date
-      .substring(0, 10)
-      .split('-')
-      .map(Number);
-
-    return new Date(year, month - 1, day || 1);
-  }
-  get monthlyAverage(): number {
-
-    if (!this.competenceInitial || !this.competenceEnd) {
-      return 0;
-    }
-
-    const initial = this.parseDate(this.competenceInitial);
-    const end = this.parseDate(this.competenceEnd);
-
-    const months =
-      (end.getFullYear() - initial.getFullYear()) * 12 +
-      (end.getMonth() - initial.getMonth()) + 1;
-
-    if (months <= 0) {
-      return 0;
-    }
-
-    return this.totalExpenses / months;
+    const categoryOptions = this.categoryOptions;
+    return categories
+      .filter(category =>
+        selectedIds.includes(category.id)
+      )
+      .flatMap(category => {
+        const option =
+          categoryOptions.find(
+            item => item.id === category.id
+          );
+        if (!option) {
+          return [];
+        }
+        return category.expenses.map(expense => ({
+          name: expense.name,
+          type: category.name,
+          value: expense.total,
+          icon: option.icon,
+          color: option.color,
+          background: option.background
+        }));
+      })
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 6);
   }
 }

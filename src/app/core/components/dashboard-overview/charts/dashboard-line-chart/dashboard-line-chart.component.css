@@ -1,0 +1,244 @@
+.line-chart-wrapper {
+  width: 100%;
+
+  min-height: 280px;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* ========================================= */
+/* SVG */
+/* ========================================= */
+
+.line-chart {
+  width: 100%;
+
+  height: 280px;
+
+  overflow: visible;
+
+  display: block;
+}
+
+
+/* ========================================= */
+/* GRID */
+/* ========================================= */
+
+.grid-line {
+  stroke: #edf0f5;
+
+  stroke-width: 1;
+
+  vector-effect: non-scaling-stroke;
+}
+
+
+.grid-label {
+  fill: #98a2b3;
+
+  font-size: 10px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+}
+
+
+/* ========================================= */
+/* ÁREA */
+/* ========================================= */
+
+.line-area {
+  fill: rgba(37, 99, 235, 0.08);
+
+  stroke: none;
+}
+
+
+/* ========================================= */
+/* LINHA */
+/* ========================================= */
+
+.line {
+  fill: none;
+
+  stroke: #2563eb;
+
+  stroke-width: 3;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  vector-effect: non-scaling-stroke;
+}
+
+
+/* ========================================= */
+/* PONTOS */
+/* ========================================= */
+
+.point-outer {
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  vector-effect: non-scaling-stroke;
+}
+
+
+.point {
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  vector-effect: non-scaling-stroke;
+
+  transition:
+    r 0.15s ease;
+}
+
+
+.point:hover {
+  r: 6;
+}
+
+
+/* ========================================= */
+/* VALORES */
+/* ========================================= */
+
+.point-value {
+  fill: #344054;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  pointer-events: none;
+}
+
+
+/* ========================================= */
+/* LABELS X */
+/* ========================================= */
+
+.x-label {
+  fill: #667085;
+
+  font-size: 10px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+}
+
+
+/* ========================================= */
+/* LEGENDA */
+/* ========================================= */
+
+.line-legend {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-top: 4px;
+}
+
+
+.legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #667085;
+
+  font-size: 11px;
+}
+
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+
+.legend-name {
+  white-space: nowrap;
+}
+
+
+/* ========================================= */
+/* EMPTY */
+/* ========================================= */
+
+.empty-state {
+  min-height: 280px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #98a2b3;
+
+  font-size: 13px;
+}
+
+
+/* ========================================= */
+/* RESPONSIVO */
+/* ========================================= */
+
+@media (max-width: 700px) {
+
+  .line-chart {
+    height: 240px;
+  }
+
+
+  .point-value {
+    display: none;
+  }
+
+
+  .grid-label {
+    font-size: 9px;
+  }
+
+
+  .x-label {
+    font-size: 9px;
+  }
+
+
+  .line-legend {
+    justify-content: flex-start;
+  }
+
+}

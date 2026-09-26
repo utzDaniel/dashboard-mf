@@ -1,0 +1,178 @@
+<div class="line-chart-wrapper">
+
+  @if (items.length) {
+
+    <svg
+      class="line-chart"
+      [attr.viewBox]="'0 0 ' + width + ' ' + height"
+      preserveAspectRatio="none"
+      role="img"
+      aria-label="Gráfico de linha">
+
+
+      <!-- ================================= -->
+      <!-- GRID HORIZONTAL -->
+      <!-- ================================= -->
+
+      @for (
+        grid of gridLines;
+        track grid
+      ) {
+
+        <line
+          class="grid-line"
+
+          [attr.x1]="padding.left"
+          [attr.y1]="getGridY(grid)"
+
+          [attr.x2]="width - padding.right"
+          [attr.y2]="getGridY(grid)"
+        />
+
+        <text
+          class="grid-label"
+
+          [attr.x]="padding.left - 10"
+          [attr.y]="getGridY(grid) + 4"
+
+          text-anchor="end"
+        >
+          {{ formatValue(getGridValue(grid)) }}
+        </text>
+
+      }
+
+
+      <!-- ================================= -->
+      <!-- ÁREA ABAIXO DA LINHA -->
+      <!-- ================================= -->
+
+      <polygon
+        class="line-area"
+
+        [attr.points]="areaPoints"
+      />
+
+
+      <!-- ================================= -->
+      <!-- LINHA -->
+      <!-- ================================= -->
+
+      <polyline
+        class="line"
+
+        [attr.points]="linePoints"
+      />
+
+
+      <!-- ================================= -->
+      <!-- PONTOS -->
+      <!-- ================================= -->
+
+      @for (
+        point of points;
+        track point.item.id
+      ) {
+
+        <!-- círculo externo -->
+
+        <circle
+          class="point-outer"
+
+          [attr.cx]="point.x"
+          [attr.cy]="point.y"
+
+          r="7"
+
+          [style.fill]="
+            point.item.background ??
+            '#ffffff'
+          "
+        />
+
+
+        <!-- círculo interno -->
+
+        <circle
+          class="point"
+
+          [attr.cx]="point.x"
+          [attr.cy]="point.y"
+
+          r="4"
+
+          [style.fill]="point.item.color"
+        />
+
+
+        <!-- valor -->
+
+        <text
+          class="point-value"
+
+          [attr.x]="point.x"
+          [attr.y]="point.y - 13"
+
+          text-anchor="middle"
+        >
+          {{ formatValue(point.value) }}
+        </text>
+
+
+        <!-- label -->
+
+        <text
+          class="x-label"
+
+          [attr.x]="point.x"
+          [attr.y]="height - 18"
+
+          text-anchor="middle"
+        >
+          {{ getShortName(point.item.name) }}
+        </text>
+
+      }
+
+    </svg>
+
+
+    <!-- ================================= -->
+    <!-- LEGENDA -->
+    <!-- ================================= -->
+
+    <div class="line-legend">
+
+      @for (
+        item of items;
+        track item.id
+      ) {
+
+        <div class="legend-item">
+
+          <span
+            class="legend-dot"
+            [style.background]="item.color">
+          </span>
+
+          <span class="legend-name">
+            {{ item.name }}
+          </span>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+  @else {
+
+    <div class="empty-state">
+      Nenhum dado encontrado.
+    </div>
+
+  }
+
+</div>

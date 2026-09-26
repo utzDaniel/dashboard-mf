@@ -1,0 +1,49 @@
+<div class="column-chart">
+
+  <div class="columns">
+
+    @for (
+      item of items;
+      track item.id
+    ) {
+
+      <div class="column-item">
+
+        <div class="column-value">
+          {{ formatValue(item.value) }}
+        </div>
+
+        <div class="column-area">
+
+          <div class="column-percentage">
+            {{ getHeight(item) | number:'1.1-1' }}%
+          </div>
+
+          <div
+            class="column-bar"
+            [style.height.%]="getHeight(item)"
+            [style.background]="item.color">
+          </div>
+
+        </div>
+
+        <div class="column-label">
+
+          <span
+            class="dot"
+            [style.background]="item.color">
+          </span>
+
+          <span>
+            {{ item.name }}
+          </span>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

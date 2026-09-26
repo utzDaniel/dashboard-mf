@@ -1,0 +1,56 @@
+<div class="bar-chart">
+
+  @for (
+  item of items;
+  track item.id
+  ) {
+
+  <div class="bar-item">
+
+    <div class="bar-header">
+
+      <div class="bar-name">
+
+        <span class="dot" [style.background]="item.color">
+        </span>
+
+        <span>
+          {{ item.name }}
+        </span>
+
+      </div>
+
+      <strong>
+        {{ formatValue(item.value) }}
+      </strong>
+
+    </div>
+
+
+    <div class="bar-track">
+
+      <div class="bar-value" [style.width.%]="getPercentage(item)" [style.background]="item.color">
+      </div>
+
+    </div>
+
+    <div class="bar-percentage">
+
+      {{ getPercentage(item) | number:'1.1-1' }}%
+
+    </div>
+
+  </div>
+
+  }
+
+
+  @if (!items.length) {
+
+  <div class="empty-state">
+    Nenhum dado encontrado.
+  </div>
+
+  }
+
+</div>

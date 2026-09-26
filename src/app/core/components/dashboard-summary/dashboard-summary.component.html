@@ -1,0 +1,87 @@
+<section class="dashboard-summary">
+
+  <div class="summary-grid">
+
+    <!-- TOTAL -->
+
+    <div class="summary-card total">
+
+      <div class="card-icon">
+        <i class="pi pi-wallet"></i>
+      </div>
+
+      <div class="card-content">
+
+        <span class="label">
+          Total
+        </span>
+
+        <strong>
+          {{ formatValue(total) }}
+        </strong>
+
+        <small>
+          Soma dos valores
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- MÉDIA -->
+
+    <div class="summary-card average">
+
+      <div class="card-icon">
+        <i class="pi pi-chart-line"></i>
+      </div>
+
+      <div class="card-content">
+
+        <span class="label">
+          Média
+        </span>
+
+        <strong>
+          {{ formatValue(average) }}
+        </strong>
+
+        <small>
+          Média no período
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- TOTAL DE REGISTROS -->
+
+    <div class="summary-card records">
+
+      <div class="card-icon">
+        <i class="pi pi-list"></i>
+      </div>
+
+      <div class="card-content">
+
+        <span class="label">
+          Total
+        </span>
+
+        <strong>
+          {{ totalRecords }}
+        </strong>
+
+        <small>
+          Quantidade de registros
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

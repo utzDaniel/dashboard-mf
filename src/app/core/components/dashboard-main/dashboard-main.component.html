@@ -1,0 +1,77 @@
+<div class="dashboard-card">
+
+  <div class="card-header">
+
+    <div>
+
+      <h3>
+        {{ title }}
+      </h3>
+
+      <span>
+        {{ subtitle }}
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="top-events">
+
+    @for (
+      event of events;
+      track event.name + '-' + event.type;
+      let i = $index
+    ) {
+
+      <div class="top-event">
+
+        <div class="event-position">
+          {{ i + 1 }}
+        </div>
+
+
+        <div
+          class="event-icon"
+          [style.background]="event.background || event.color"
+          [style.color]="event.background ? event.color : '#ffffff'"
+        >
+
+          <i [class]="event.icon"></i>
+
+        </div>
+
+
+        <div class="event-data">
+
+          <strong>
+            {{ event.name }}
+          </strong>
+
+          <span>
+            {{ event.type }}
+          </span>
+
+        </div>
+
+
+        <div class="event-value">
+
+          {{ formatCurrency(event.value) }}
+
+        </div>
+
+      </div>
+
+    } @empty {
+
+      <div class="empty-state">
+         Nenhum dado encontrado.
+      </div>
+
+    }
+
+  </div>
+
+</div>
